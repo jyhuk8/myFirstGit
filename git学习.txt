@@ -1,0 +1,75 @@
+1.git下载和安装
+
+2.git配置初始化
+	git config --global user.email='your email'
+	git config --global user.name='your name'
+
+3.git工作区准备
+	创建好工作[即一个系统目录,例如:windows的E:/gitwork、linux的home/gitwork...]
+	执行git init:将创建git工作区,目录下会生成一个.git文件夹
+
+4.暂存区和提交区
+	git add file:将文件加入到暂存区(可以是新增,修改,删除,只要是有变动都可以add)
+	git commit -m file:将文件提交到提交区(将暂存区保存的提交信息实际的提交到工作区)
+
+5.查看git当前工作区的状态: git status
+	1.nothing to commit:干净状态,没有任何改动(没有新增,修改,删除)
+	2.Untracked files :未被追踪的文件(新建文件,没有被git版本控制器管理过的文件)
+	3.changes to be committed: 未提交状态(add到暂存区之后)
+	4.changes not staged for comit:表示文件修改过,但是没有add到暂存区
+
+6.git版本切换:每次文件由工作区到暂存区再到提交区之后都会产生一个commitid,我们可以通过git log命令查看当前工作区的日志信息,包含了所有commit信息,找到commitid之后使用git reset --hard commitid 命令即可切换到指定版本.如果已经知道是前N个版本我们还可以使用命令git reset --hard HEAD[N个^]进行版本切换.
+	版本切换时会产生一个问题,当切换到旧版本的时候,最新的commitid通过git log命令我们没法查看到最新的commitid,此时我们可以使用git reflog命令来查询所有的commitid
+
+7.取消修改/撤销修改/放弃修改/拉取服务器:
+	情况1.没有提交到暂存区,即表示没有进行git add file操作,我们可以执行git checkout -- file命令来插销当前文件.
+	情况2.我们已经执行git add file操作,此时若想进行撤销操作,我们需要将暂存区的内容给拉回来到工作区,执行git reset HEAD file将文件信息回到工作区最初的版本,此时修改会继续保留,只是从暂存区回退到工作区,此时再使用git checkout -- file进行撤销操作即可.
+
+8.分支:
+	查看所有分支:git branch
+	创建分支:创建一个名为"jyhu"的分支.可以使用命令git checkout -b jyhu
+	切换分支:git checkout 分支名
+	删除分支: git branch -d 分支名,想要删除当前分支,必须使用其它分支,不然删除不了.如果分支有改动,则需要marge合并分支,不然就只能强制删除分支,使用git branch -D 分支名 命令强制删除分支.
+
+	主分支master我们不会去动,只会用于版本的发布.各自在各自的分支上完成开发后,需要将开发的内容合并到主分支上去.成为marge.
+
+	合并分支: 
+		1.快速合并,在master分支上使用git marge mybranch(需要合并的分支)
+		2.解决冲突:当执行git marge 分支名称产生冲突时,需要手动解决冲突,并且再去进行add和commit操作.
+
+git config 和配置别名
+	git config -l 查看config配置信息
+	产生问题:这些信息怎么出现的呢?实际上分为仓库级别,全局级别,系统级别.()
+	仓库级别配置:当前工作区下.git文件夹下的config文件;[命令为:git config --local -l]
+	全局级别配置:当前用户之下=>C:\Users\issuser\.gitconfig文件;[命令为:git config --global -l]
+	系统级别配置:在git的安装目录下的.../etc/gitconfig文件;[命令为:git config --system -l]
+	如果想要进行编辑:git config --local -e
+	配置如何添加属性:git config --global --add user.age
+	配置如何删除属性:git config --global --unset user.age
+	配置别名:git config --global alias.st status =>查看状态:git st(注意status必须和命令保持一样)
+
+git标签和忽略文件
+	git tag v1  等于将当前版本的commitid对应上v1
+	查看标签列表:git tag
+	给指定的commitid打上一个标签命令: git tag 便签名 对应的commitid
+	git tag tagname -m '标签说明'
+	删除标签 git tag -d tagname
+	忽略文件: 在工作区根目录下创建一个.gitignore文件
+	忽略规则:
+		*.class:告诉git不要帮我管理class文件啦
+		
+远程仓库和本地仓库(github,gitee)
+	0.查看本地仓库是否关联远程仓库.执行git remote命令
+	1.在本地仓库中配置一下本地仓库和远程仓库的关系. 给本地仓库中添加一个远程仓库 git remote add origin git@远程仓库的地址,使用git remote -v查看
+	2.关联之后就可以进行代码的推送:git push -u origin master,推送时,远程仓库需要确定你本地电脑是安全的,所以需要去走一个ssh或者https增加权限,若没有增加权限,需要添加权限,步骤一:在本地中生成ssh key(生成命令:ssh-keygen -t rsa -C 'jyhuk8@163.com'),意味着在自己的计算机中增加一个安全ssh key(C:\Users\issuser\.ssh),复制public文件中的key到github/gitee里面
+
+
+	git restore说明:
+	git restore命令，会撤销文件的修改，使文件恢复到暂存区或本地代码库（取决于文件在修改前的状态）；
+	git restore --staged 命令，把文件从暂存区撤回到工作区，保留文件最后一次修改的内容；
+笔记:
+	当工作区需要add的文件比较多的时候,我们可以使用git add .命令一次性将当前目录下所有的修改文件都提交到暂存区.
+	如果内容已经add到暂存区,此时如想撤销的话,需要先回到最新的一个commitid上,此时就可以用HEAD[表示当前最新版本的commitid]代替(git reset --hard HEAD),HEAD的补充:HEAD头指针指向的时当前分支最新的commitid
+
+1.已经提交工作区的文件如何忽略
+	1.1.执行git rm --cached <file> 直接从暂存区删除文件,工作区不变.(git rm -r --cached <file> 可以删除文件和文件夹,例如:git rm -r --cached .idea/)
