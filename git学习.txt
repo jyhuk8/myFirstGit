@@ -62,8 +62,8 @@ git标签和忽略文件
 	0.查看本地仓库是否关联远程仓库.执行git remote命令
 	1.在本地仓库中配置一下本地仓库和远程仓库的关系. 给本地仓库中添加一个远程仓库 git remote add origin git@远程仓库的地址,使用git remote -v查看
 	2.将远程仓库的代码拉取到本地:执行git clone url
-	2.关联之后就可以进行代码的推送:git push -u origin master,推送时,远程仓库需要确定你本地电脑是安全的,所以需要去走一个ssh或者https增加权限,若没有增加权限,需要添加权限,步骤一:在本地中生成ssh key(生成命令:ssh-keygen -t rsa -C 'jyhuk8@163.com'),意味着在自己的计算机中增加一个安全ssh key(C:\Users\issuser\.ssh),复制public文件中的key到github/gitee里面
-
+	3.关联之后就可以进行代码的推送:git push -u origin master,推送时,远程仓库需要确定你本地电脑是安全的,所以需要去走一个ssh或者https增加权限,若没有增加权限,需要添加权限,步骤一:在本地中生成ssh key(生成命令:ssh-keygen -t rsa -C 'jyhuk8@163.com'),意味着在自己的计算机中增加一个安全ssh key(C:\Users\issuser\.ssh),复制public文件中的key到github/gitee里面
+	4.如果远程仓库和本地仓库不一致,则需要先git pull拉取代码到本地仓库,如归有冲突,则需要先手动解决冲突,然后重新提交.
 
 	git restore说明:
 	git restore命令，会撤销文件的修改，使文件恢复到暂存区或本地代码库（取决于文件在修改前的状态）；
