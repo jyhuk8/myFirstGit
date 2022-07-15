@@ -68,6 +68,8 @@ git标签和忽略文件
 	git restore说明:
 	git restore命令，会撤销文件的修改，使文件恢复到暂存区或本地代码库（取决于文件在修改前的状态）；
 	git restore --staged 命令，把文件从暂存区撤回到工作区，保留文件最后一次修改的内容；
+	当我们git push的时候:git push <远程主机名> <本地分支名>:<远程分支名>,如果本地分支名与远程分支名相同git push <远程主机名> <本地分支名>
+	git push origin master 本地分支master提交到远端master
 笔记:
 	当工作区需要add的文件比较多的时候,我们可以使用git add .命令一次性将当前目录下所有的修改文件都提交到暂存区.
 	如果内容已经add到暂存区,此时如想撤销的话,需要先回到最新的一个commitid上,此时就可以用HEAD[表示当前最新版本的commitid]代替(git reset --hard HEAD),HEAD的补充:HEAD头指针指向的时当前分支最新的commitid
@@ -76,3 +78,5 @@ git标签和忽略文件
 	1.1.执行git rm --cached <file> 直接从暂存区删除文件,工作区不变.(git rm -r --cached <file> 可以删除文件和文件夹,例如:git rm -r --cached .idea/)
 	1.2.先执行:git update-index --assume-unchanged logs/*.log(文件目录/文件名) 告诉Git暂时不要理睬你对文件做的修改;
 		最后决定要提交的时候执行:git update-index --no-assume-unchanged logs/*.log,Git会做一次更新.之后提交+推送.
+
+2.切换分支时,如果当前分支没有有内容未提交,则可以使用git stash命令来保存当前工作区和暂存区的一个工作状态,等另外一个分支的编辑完成之后回来可以继续开发.
