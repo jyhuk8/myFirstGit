@@ -61,15 +61,15 @@ git标签和忽略文件
 远程仓库和本地仓库(github,gitee)
 	0.查看本地仓库是否关联远程仓库.执行git remote命令
 	1.在本地仓库中配置一下本地仓库和远程仓库的关系. 给本地仓库中添加一个远程仓库 git remote add origin git@远程仓库的地址,使用git remote -v查看
-	2.将远程仓库的代码拉取到本地:执行git clone url
+	2.将远程仓库的代码拉取到本地:执行git clone url O
 	3.关联之后就可以进行代码的推送:git push -u origin master,推送时,远程仓库需要确定你本地电脑是安全的,所以需要去走一个ssh或者https增加权限,若没有增加权限,需要添加权限,步骤一:在本地中生成ssh key(生成命令:ssh-keygen -t rsa -C 'jyhuk8@163.com'),意味着在自己的计算机中增加一个安全ssh key(C:\Users\issuser\.ssh),复制public文件中的key到github/gitee里面
 	4.如果远程仓库和本地仓库不一致,则需要先git pull拉取代码到本地仓库,如归有冲突,则需要先手动解决冲突,然后重新提交.
 
 	git restore说明:
 	git restore命令，会撤销文件的修改，使文件恢复到暂存区或本地代码库（取决于文件在修改前的状态）；
 	git restore --staged 命令，把文件从暂存区撤回到工作区，保留文件最后一次修改的内容；
-	当我们git push的时候:git push <远程主机名> <本地分支名>:<远程分支名>,如果本地分支名与远程分支名相同git push <远程主机名> <本地分支名>
-	git push origin master 本地分支master提交到远端master
+	
+
 笔记:
 	当工作区需要add的文件比较多的时候,我们可以使用git add .命令一次性将当前目录下所有的修改文件都提交到暂存区.
 	如果内容已经add到暂存区,此时如想撤销的话,需要先回到最新的一个commitid上,此时就可以用HEAD[表示当前最新版本的commitid]代替(git reset --hard HEAD),HEAD的补充:HEAD头指针指向的时当前分支最新的commitid
@@ -80,3 +80,8 @@ git标签和忽略文件
 		最后决定要提交的时候执行:git update-index --no-assume-unchanged logs/*.log,Git会做一次更新.之后提交+推送.
 
 2.切换分支时,如果当前分支没有有内容未提交,则可以使用git stash命令来保存当前工作区和暂存区的一个工作状态,等另外一个分支的编辑完成之后回来可以继续开发.
+3.拉取远程分支到本地分支:
+	git fetch origin 远程分支名:本地分支名
+	git checkout -b 本地分支名 origin/远程分支名
+4.推送本地分支到远程分支
+	git push <远程主机名> <本地分支名>:<远程分支名>,如果本地分支名与远程分支名相同git push <远程主机名> <本地分支名>(git push origin master 本地分支master提交到远端master)
