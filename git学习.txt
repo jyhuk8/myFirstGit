@@ -74,3 +74,5 @@ git标签和忽略文件
 
 1.已经提交工作区的文件如何忽略
 	1.1.执行git rm --cached <file> 直接从暂存区删除文件,工作区不变.(git rm -r --cached <file> 可以删除文件和文件夹,例如:git rm -r --cached .idea/)
+	1.2.先执行:git update-index --assume-unchanged logs/*.log(文件目录/文件名) 告诉Git暂时不要理睬你对文件做的修改;
+		最后决定要提交的时候执行:git update-index --no-assume-unchanged logs/*.log,Git会做一次更新.之后提交+推送.
