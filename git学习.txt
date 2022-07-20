@@ -85,3 +85,7 @@ git标签和忽略文件
 	git checkout -b 本地分支名 origin/远程分支名
 4.推送本地分支到远程分支
 	git push <远程主机名> <本地分支名>:<远程分支名>,如果本地分支名与远程分支名相同git push <远程主机名> <本地分支名>(git push origin master 本地分支master提交到远端master)
+5.取消工作区中的全部修改
+6.直接将A分支中的提交commitA提交到master分支
+	git checkout master:切换到master分支
+	git cherry-pick A分支的commitAId:将A分支的commitA提交的内容合并到master分支上面去
